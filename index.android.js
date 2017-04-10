@@ -10,15 +10,73 @@ import {
   StyleSheet,
   Text,
   View,
-  TextInput
+  TextInput,
+  Navigator,
+  TouchableHighlight,
+  BackAndroid
 } from 'react-native';
 import { AnimatedCircularProgress } from 'react-native-circular-progress';
 
 
-export default class morphium extends Component {
+export default class MorphiumApp extends Component {
+
+  render() {
+
+    return (
+      <Navigator
+        initialRoute={{id: 'morphium.MorphiumIndexView'}}
+        renderScene={(route, navigator) =>
+
+          {
+            BackAndroid.addEventListener('hardwareBackPress', function() {
+             // this.onMainScreen and this.goBack are just examples, you need to use your own implementation here
+             // Typically you would use the navigator here to go to the last state.
+             console.log(navigator.getCurrentRoutes());
+             if(navigator.getCurrentRoutes().length > 1)
+             {
+               navigator.pop();
+               return true;
+             }
+             return false;
+            });
+              if (route.id == 'morphium.MorphiumSettingsView') {
+
+                return <MorphiumSettingsView nav={navigator} />
+            } else {
+              return <MorphiumIndexView nav={navigator} />
+            }
+          }
+        }
+        />
+    );
+  }
+}
+
+export class MorphiumSettingsView extends Component {
   constructor(props)
   {
-    super(props)
+    super(props);
+  }
+  render() {
+    return (
+      <View style={styles.container}>
+        <Text style={styles.welcome}>
+          Settins
+        </Text>
+        <TextInput
+                style={{height: 40, width:200}}
+                placeholder="Drugname"
+                onChangeText={(text) => this.setState({text})}
+              />
+        </View>
+    );
+  }
+}
+
+export class MorphiumIndexView extends Component {
+  constructor(props)
+  {
+    super(props);
 
     this.period = new Date(1970,0,1,4,0,0,0);
     this.lastEvent = new Date(2017,3,10,10,30,0,0);
@@ -55,11 +113,7 @@ export default class morphium extends Component {
     )
   }
   </AnimatedCircularProgress>
-  <TextInput
-          style={{height: 40, width:200}}
-          placeholder="Drugname"
-          onChangeText={(text) => this.setState({text})}
-        />
+  <Text onPress={() => this.props.nav.push({id: 'morphium.MorphiumSettingsView'})}>Settings</Text>
   <Text style={styles.welcome}>
     {'Drugname'}
   </Text>
@@ -101,4 +155,4 @@ const styles = StyleSheet.create({
   },
 });
 
-AppRegistry.registerComponent('morphium', () => morphium);
+AppRegistry.registerComponent('morphium', () => MorphiumApp);
