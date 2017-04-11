@@ -2,11 +2,14 @@
 
 * Settings scene - UI, link, persistent store -> split into edit item and global prefs
 * Welcome/first time scene
-* Refactor out main widget into a component, link
-* Handle case where period has elapsed
+* Refactor
 * Layout - flex not fixed
-* Trigger recalculations when appropriate
+* Trigger recalculations when appropriate - check safety of setInterval
+* Remove duplicated logic in onTrigger and onTick - pass the new state in somehow
+
+# Stretch goals
 
 * Shiny graphics per med
 * Log
 * iOS
+* Complex rules
