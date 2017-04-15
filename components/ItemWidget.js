@@ -4,15 +4,32 @@ import {
   View,
   TextInput,
   TouchableHighlight,
-  Button,
-  AsyncStorage
+  Button
 } from 'react-native';
 import { AnimatedCircularProgress } from 'react-native-circular-progress';
 const Palette = require('google-material-color-palette-json')
 var styles = require('../styles.js').styles
 
+import {connect} from 'react-redux'
 
-export default class MorphiumItemWidget extends Component
+const mapStateToPropsTrig = (state) => {
+  console.log('got state: ' + state.triggerTime)
+  return {
+    lastEvent: new Date(state.triggerTime),
+    interval: new Date(state.interval)
+  }
+}
+
+const mapDispatchToPropsTrig = (dispatch) => {
+  return {
+    onTrigger: () => {
+      console.log('trigger activated')
+      dispatch({type: 'TRIGGER', id: 0})
+    }
+  }
+}
+
+export class MorphiumItemWidget extends Component
 {
   constructor(props)
   {
@@ -20,14 +37,14 @@ export default class MorphiumItemWidget extends Component
 
     now = new Date();
     this.state =  {
-      lastEvent: this.props.lastEvent,
+      // lastEvent: this.props.lastEvent,
       timeRemaining: new Date(0),
       fillState: 100,
       enabled: false
     }
-    this.getLastEvent()
+    // this.getLastEvent()
 
-    this.onTrigger = this.onTrigger.bind(this)
+    // this.onTrigger = this.onTrigger.bind(this)
     this.onTick = this.onTick.bind(this)
 
   }
@@ -36,63 +53,41 @@ export default class MorphiumItemWidget extends Component
     this.onTick();
 
   }
-  getLastEvent = async () => {
-    try {
-      // await AsyncStorage.removeItem(STORAGE_KEY);
-
-      var value = await AsyncStorage.getItem('morphium.lastEvent');
-      var newTgt = Date.parse(value)
-      if (value !== null){
-        this.setState({lastEvent: newTgt});
-        console.log('Recovered selection from disk: ' + value);
-        requestAnimationFrame(this.onTick);
-
-      } else {
-        console.log('Initialized with no selection on disk.');
-      }
-      this.onTick();
-    } catch (error) {
-      console.log('AsyncStorage error: ' + error.message);
-    }
-  };
-
-  setLastEvent = async (t) => {
-   try {
-     await AsyncStorage.setItem('morphium.lastEvent', t.toUTCString());
-     console.log('Saved selection to disk: ' + t);
-   } catch (error) {
-     console.log('AsyncStorage error: ' + error.message);
-   }
- };
-  onTrigger()
+  // onTrigger()
+  // {
+  //   // This should all be handled higher up really - then lastEvent can be removed from state
+  //   let now = new Date()
+  //   this.setLastEvent(now)
+  //   console.log('On trigger! ' + now);
+  //   this.setState({'lastEvent': now});
+  //   this.setState({
+  //     'timeRemaining':  new Date(this.props.interval - (now - now)),
+  //     'fillState': Math.min(100*(now - now)/this.props.interval.getTime(), 100),
+  //     'enabled': this.props.interval - (now - now) < 0
+  //   })
+  //   requestAnimationFrame(this.onTick);
+  //
+  // }
+  componentWillReceiveProps()
   {
-    // This should all be handled higher up really - then lastEvent can be removed from state
-    let now = new Date()
-    this.setLastEvent(now)
-    console.log('On trigger! ' + now);
-    this.setState({'lastEvent': now});
-    this.setState({
-      'timeRemaining':  new Date(this.props.interval - (now - now)),
-      'fillState': Math.min(100*(now - now)/this.props.interval.getTime(), 100),
-      'enabled': this.props.interval - (now - now) < 0
-    })
+    // This feels dirty... maybe tidy it once things are mostly working
     requestAnimationFrame(this.onTick);
   }
   onTick()
   {
     now = new Date();
     this.setState({
-      'timeRemaining':  new Date(this.props.interval - (now - this.state.lastEvent)),
-      'fillState': Math.min(100*(now - this.state.lastEvent)/this.props.interval.getTime(), 100),
-      'enabled': this.props.interval - (now - this.state.lastEvent) < 0
+      'timeRemaining':  new Date(this.props.interval - (now - this.props.lastEvent)),
+      'fillState': Math.min(100*(now - this.props.lastEvent)/this.props.interval.getTime(), 100),
+      'enabled': this.props.interval - (now - this.props.lastEvent) < 0
     })
 
 
-    console.log(this.state.timeRemaining);
-    console.log(this.state.lastEvent)
-    console.log(this.props.interval.getTime())
-    console.log(now - this.state.lastEvent)
-    console.log(this.state.fillState)
+    // console.log(this.state.timeRemaining);
+    // console.log(this.props.lastEvent)
+    // console.log(this.props.interval.getTime())
+    // console.log(now - this.props.lastEvent)
+    // console.log(this.state.fillState)
     if(!this.state.enabled)
     {
       setTimeout(this.onTick, 2000);
@@ -122,7 +117,7 @@ export default class MorphiumItemWidget extends Component
             else
               {
 
-               return <Text style={styles.points} onPress={this.onTrigger}>Start</Text>
+               return <Text style={styles.points} onPress={this.props.onTrigger}>Start ({this.props.lastEvent.toUTCString()})</Text>
 
                }
           }
@@ -135,3 +130,9 @@ export default class MorphiumItemWidget extends Component
   );
   }
 }
+
+const VisibleMorphiumItemWidget = connect(
+  mapStateToPropsTrig,
+  mapDispatchToPropsTrig
+)(MorphiumItemWidget)
+export default VisibleMorphiumItemWidget;

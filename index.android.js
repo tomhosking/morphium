@@ -16,6 +16,7 @@ import {
   TouchableHighlight,
   BackAndroid,
   Button,
+  AsyncStorage
 } from 'react-native';
 import { AnimatedCircularProgress } from 'react-native-circular-progress';
 
@@ -27,12 +28,32 @@ import HelpView from './components/HelpView'
 import SettingsView from './components/SettingsView'
 import MainView from './components/MainView'
 
+import { connect, Provider } from 'react-redux'
+import { compose, createStore } from 'redux'
+import morphiumReducer from './reducers'
+
+
+import {persistStore, autoRehydrate} from 'redux-persist'
+
+const initState = {triggerTime: new Date(0), interval: new Date(1000*60*60*4)}
+
+const store = compose(autoRehydrate())(createStore)(morphiumReducer, initState)
+
+
 
 export default class MorphiumApp extends Component {
+  componentWillMount()
+  {
+    persistStore(store, {storage: AsyncStorage}, (err, state) => {
+      console.log('rehydration complete')
+      console.log('loaded: ' + state.triggerTime)
+    })
+  }
 
   render() {
 
     return (
+      <Provider store={store}>
       <Navigator
         initialRoute={{id: 'morphium.MorphiumIndexView'}}
         renderScene={(route, navigator) =>
@@ -61,6 +82,7 @@ export default class MorphiumApp extends Component {
           }
         }
         />
+        </Provider>
     );
   }
 }
