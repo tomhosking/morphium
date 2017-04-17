@@ -4,19 +4,19 @@ export const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#F5FCFF',
+    backgroundColor: '#F5FCFF'
   },
   welcome: {
     position: 'absolute',
     top:0,
     fontSize: 20,
     textAlign: 'center',
-    margin: 10,
+    margin: 10
   },
   instructions: {
     textAlign: 'center',
     color: '#333333',
-    marginBottom: 5,
+    marginBottom: 5
   },
   points: {
     backgroundColor: 'transparent',
@@ -31,8 +31,8 @@ export const styles = StyleSheet.create({
   },
   menu_right: {
     position: 'absolute',
-    top: 0,
-    right: 0
+    // top: 0,
+    // right: 0
   },
   menu_left: {
     position: 'absolute',

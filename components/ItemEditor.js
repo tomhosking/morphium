@@ -6,8 +6,10 @@ import {
   TouchableHighlight,
   Button
 } from 'react-native';
+import {TimePicker} from './TimePicker'
 
 import { connect } from 'react-redux'
+
 
 
 export class MorphiumItemEditor extends Component {
@@ -20,16 +22,20 @@ export class MorphiumItemEditor extends Component {
   {
     return (
       <View>
-      <TextInput
-              style={{height: 40, width:200}}
-              placeholder="Drugname"
-              onChangeText={(text) => this.setState({text})}
-            />
-      <TextInput
-              style={{height: 40, width:200}}
-              placeholder="Interval"
-              onChangeText={(text) => this.setState({text})}
-            />
+        <Text>
+          Drug name:
+        </Text>
+        <TextInput
+          style={{height: 40, width:200}}
+          placeholder="Drugname"
+          onEndEditing={(e) => this.props.onChangeTitle(e.nativeEvent.text)}
+          defaultValue={this.props.title}
+        />
+        <Text>
+          Interval:
+        </Text>
+        <TimePicker value={this.props.interval} onChange={(t) => this.props.onChangeInterval(t)}/>
+
       </View>
     )
   }
@@ -37,15 +43,23 @@ export class MorphiumItemEditor extends Component {
 
 
 const mapStateToProps = (state) => {
+  console.log('got state: ' + state.triggerTime)
   return {
-    todos: getVisibleTodos(state.todos, state.visibilityFilter)
+    lastEvent: new Date(state.triggerTime),
+    interval: new Date(state.interval),
+    title: state.title
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onTodoClick: (id) => {
-      dispatch(toggleTodo(id))
+    onChangeTitle: (t) => {
+      console.log('title changed')
+      dispatch({type: 'SET_TITLE', id: 0, title: t})
+    },
+    onChangeInterval: (i) => {
+      console.log('interval changed')
+      dispatch({type: 'SET_INTERVAL', id: 0, interval: i})
     }
   }
 }

@@ -10,7 +10,7 @@ import {
 var styles = require('../styles.js').styles
 
 
-export class MorphiumHelpView extends Component {
+export default class MorphiumHelpView extends Component {
   constructor(props)
   {
     super(props)
@@ -21,7 +21,7 @@ export class MorphiumHelpView extends Component {
       <View style={styles.container}>
         <Text style={styles.welcome}>Welcome to Morphium</Text>
         <Text>Morphium is a pain medication helper app</Text>
-        <Text onPress={() => {this.props.nav.pop()}}>Close</Text>
+        <Button onPress={() => {this.props.nav.pop()}} title='Close' />
       </View>
     )
   }

@@ -12,78 +12,17 @@ import VisibleMorphiumItemWidget from './ItemWidget'
 import Icon from 'react-native-vector-icons/MaterialIcons';
 const Palette = require('google-material-color-palette-json')
 
-import { connect } from 'react-redux'
+const MK = require('react-native-material-kit');
+const {
+  MKButton,
+  MKColor,
+} = MK;
+const ColoredFab = MKButton.coloredFab().withBackgroundColor(MKColor.Orange).build();
 
-const mapStateToPropsTrig = (state) => {
-  return {
-  }
-}
-
-const mapDispatchToPropsTrig = (dispatch) => {
-  return {
-    onTrigger: () => {
-      console.log('trigger activated')
-      dispatch({type: 'TRIGGER', id: 0})
-    }
-  }
-}
-
-const mapStateToPropsRec = (state) => {
-  return {
-    output: state.triggerTime.toString()
-  }
-}
-
-const mapDispatchToPropsRec = (dispatch) => {
-  return {
-    }
-
-}
-
-
-
-
-// const Trigger = ({onTrigger}) => (
-//         <Text onPress={() => onTrigger()}>Trigger</Text>
-//   );
-class Trigger extends Component {
-  // constructor(props)
-  // {
-  //   super(props)
-  // }
-  // static propTypes = {
-  //   onTrigger: PropTypes.func.isRequired,
-  // }
-  render()
-  {
-    return(
-      <Text onPress={this.props.onTrigger}>Trigger</Text>
-    )
-  }
-}
-
-
-class Receiver extends Component {
-  render()
-  {
-    return(
-      <Text>Out: {this.props.output}</Text>
-    )
-  }
-}
-
-const VisibleTrigger = connect(
-  mapStateToPropsTrig,
-  mapDispatchToPropsTrig
-)(Trigger)
-const VisibleReceiver = connect(
-  mapStateToPropsRec,
-  mapDispatchToPropsRec
-)(Receiver)
-
-
-
-
+MK.setTheme({
+  primaryColor: MKColor.Orange,
+  accentColor: MKColor.Grey,
+});
 
 
 export default class MainView extends Component {
@@ -96,6 +35,7 @@ export default class MainView extends Component {
 
     // this.getSavedDate();
 
+    // interval={this.interval} lastEvent={this.lastEvent}
   }
 
 
@@ -106,11 +46,24 @@ export default class MainView extends Component {
         <Text style={styles.welcome}>
           Morphium
         </Text>
-        <VisibleMorphiumItemWidget interval={this.interval} lastEvent={this.lastEvent} />
-  <Text style={styles.menu_right} onPress={() => this.props.nav.push({id: 'morphium.MorphiumSettingsView'})}><Icon name="settings" size={30} color={Palette.orange.shade_500} /></Text>
-  <Text style={styles.menu_left}  onPress={() => this.props.nav.push({id: 'morphium.MorphiumHelpView'})}><Icon name="help" size={30} color={Palette.orange.shade_500} /></Text>
-        <VisibleTrigger />
-        <VisibleReceiver />
+        <VisibleMorphiumItemWidget  />
+
+        <ColoredFab
+          position='absolute'
+          top={5}
+          left={5}
+          onPress={() => this.props.nav.push({id: 'morphium.MorphiumHelpView'})}
+        >
+          <Icon name="help" size={30} color={Palette.white} />
+        </ColoredFab>
+        <ColoredFab
+          position='absolute'
+          top={5}
+          right={5}
+          onPress={() => this.props.nav.push({id: 'morphium.MorphiumSettingsView'})}onPress={() => this.props.nav.push({id: 'morphium.MorphiumSettingsView'})}
+        >
+          <Icon name="settings" size={30} color={Palette.white} />
+        </ColoredFab>
 
       </View>
 

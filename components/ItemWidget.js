@@ -12,15 +12,16 @@ var styles = require('../styles.js').styles
 
 import {connect} from 'react-redux'
 
-const mapStateToPropsTrig = (state) => {
-  console.log('got state: ' + state.triggerTime)
+const mapStateToProps = (state) => {
+  console.log('got state: ' + JSON.stringify(state.title))
   return {
     lastEvent: new Date(state.triggerTime),
-    interval: new Date(state.interval)
+    interval: new Date(state.interval),
+    title: state.title
   }
 }
 
-const mapDispatchToPropsTrig = (dispatch) => {
+const mapDispatchToProps = (dispatch) => {
   return {
     onTrigger: () => {
       console.log('trigger activated')
@@ -117,14 +118,14 @@ export class MorphiumItemWidget extends Component
             else
               {
 
-               return <Text style={styles.points} onPress={this.props.onTrigger}>Start ({this.props.lastEvent.toUTCString()})</Text>
+               return <Text style={styles.points} onPress={this.props.onTrigger}>Start</Text>
 
                }
           }
         }
       </AnimatedCircularProgress>
       <Text style={styles.instructions}>
-        {'Drugname'} - {'4:00'}
+        {this.props.title} - {this.props.interval.getHours()+'h '+this.props.interval.getMinutes()+'m'}
       </Text>
       </View>
   );
@@ -132,7 +133,7 @@ export class MorphiumItemWidget extends Component
 }
 
 const VisibleMorphiumItemWidget = connect(
-  mapStateToPropsTrig,
-  mapDispatchToPropsTrig
+  mapStateToProps,
+  mapDispatchToProps
 )(MorphiumItemWidget)
 export default VisibleMorphiumItemWidget;

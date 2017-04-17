@@ -5,15 +5,24 @@ const morphiumReducer = (state, action) => {
     case 'TRIGGER':
       console.log('Store: TRIGGER action')
       newState = {
+        ...state,
         triggerTime: (new Date()).toUTCString(),
-        interval: (new Date(1970,0,1,0,1,0,0)).toUTCString()
       }
-      // persistStore(newState);
       return(newState);
-
-    // case 'persist/REHYDRATE':
-    //   console.log('rehydrating' + JSON.stringify(state))
-    //   return(state);
+    case 'SET_INTERVAL':
+      console.log('Store: SET_INTERVAL action')
+      newState = {
+        ...state,
+        interval: (new Date(action.interval)).toUTCString(),
+      }
+      return(newState);
+    case 'SET_TITLE':
+      console.log('Store: SET_TITLE action: '+action.title)
+      newState = {
+        ...state,
+        title: action.title,
+      }
+      return(newState);
     default:
       console.log('s: ' + state.triggerTime)
       // state = {...state}

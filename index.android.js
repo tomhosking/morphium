@@ -22,11 +22,13 @@ import { AnimatedCircularProgress } from 'react-native-circular-progress';
 
 
 var styles = require('./styles.js').styles
-import ConnectedItemEditor from './components/ItemEditor'
+// import ConnectedItemEditor from './components/ItemEditor'
 import MorphiumItemWidget from './components/ItemWidget'
-import HelpView from './components/HelpView'
-import SettingsView from './components/SettingsView'
+import MorphiumHelpView from './components/HelpView'
+import VisibleMorphiumSettingsView from './components/SettingsView'
 import MainView from './components/MainView'
+
+
 
 import { connect, Provider } from 'react-redux'
 import { compose, createStore } from 'redux'
@@ -35,7 +37,7 @@ import morphiumReducer from './reducers'
 
 import {persistStore, autoRehydrate} from 'redux-persist'
 
-const initState = {triggerTime: new Date(0), interval: new Date(1000*60*60*4)}
+const initState = {triggerTime: new Date(0), interval: new Date(1000*60*60*4), title: 'Example Drug'}
 
 const store = compose(autoRehydrate())(createStore)(morphiumReducer, initState)
 
@@ -46,7 +48,7 @@ export default class MorphiumApp extends Component {
   {
     persistStore(store, {storage: AsyncStorage}, (err, state) => {
       console.log('rehydration complete')
-      console.log('loaded: ' + state.triggerTime)
+      console.log('loaded: ' + JSON.stringify(state))
     })
   }
 
@@ -72,7 +74,7 @@ export default class MorphiumApp extends Component {
             });
               if (route.id == 'morphium.MorphiumSettingsView') {
 
-                return <MorphiumSettingsView nav={navigator} />
+                return <VisibleMorphiumSettingsView nav={navigator} />
             } else if (route.id == 'morphium.MorphiumHelpView') {
 
               return <MorphiumHelpView nav={navigator} />

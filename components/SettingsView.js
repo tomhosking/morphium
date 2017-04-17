@@ -11,8 +11,22 @@ import { connect } from 'react-redux'
 import ConnectedItemEditor from './ItemEditor'
 var styles = require('../styles.js').styles
 
+const mapStateToProps = (state) => {
+  console.log('got state: ' + state.triggerTime)
+  return {
+    lastEvent: new Date(state.triggerTime),
+    interval: new Date(state.interval),
+    title: state.title
+  }
+}
 
-export default class MorphiumSettingsView extends Component {
+const mapDispatchToProps = (dispatch) => {
+  return {
+  }
+}
+
+
+export class MorphiumSettingsView extends Component {
   constructor(props)
   {
     super(props);
@@ -21,11 +35,17 @@ export default class MorphiumSettingsView extends Component {
     return (
       <View style={styles.container}>
         <Text style={styles.welcome}>
-          Settins
+          Settings
         </Text>
         <ConnectedItemEditor />
-        <Text onPress={() => {this.props.nav.pop()}}>Done</Text>
+        <Button onPress={() => {this.props.nav.pop()}} title="Done" />
       </View>
     );
   }
 }
+
+const VisibleMorphiumSettingsView = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(MorphiumSettingsView)
+export default VisibleMorphiumSettingsView;
