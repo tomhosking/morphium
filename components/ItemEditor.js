@@ -27,8 +27,8 @@ export class MorphiumItemEditor extends Component {
         </Text>
         <TextInput
           style={{height: 40, width:200}}
-          placeholder="Drugname"
-          onEndEditing={(e) => this.props.onChangeTitle(e.nativeEvent.text)}
+          placeholder="Drug name"
+          onChangeText={(e) => this.props.onChangeTitle(e)}
           defaultValue={this.props.title}
         />
         <Text>

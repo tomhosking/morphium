@@ -1,10 +1,9 @@
 # ToDo
 
-* Settings scene - UI, link, persistent store - so Redux, basically -> then split into edit item and global prefs
+* Settings scene ->  split into edit item and global prefs
 * Welcome/first time scene
-* Layout - flex not fixed
+* Layout - flex not fixed, and style properly
 * Trigger recalculations when appropriate - check safety of setInterval
-* Remove duplicated logic in onTrigger and onTick - pass the new state in somehow
 
 # Stretch goals
 
@@ -12,3 +11,4 @@
 * Log
 * iOS
 * Complex rules
+* Pain score tracker
