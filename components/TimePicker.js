@@ -17,13 +17,13 @@ export class TimePicker extends Component
   }
   componentWillMount()
   {
-    this.setState({value: this.props.value})
+    this.setState({value: this.props.value, hours: Math.floor(this.props.value/(1000*60*60)), minutes: Math.floor(this.props.value/(1000*60) % 60)})
   }
   render()
   {
     return(
       <Text onPress={this.showPicker}>
-      {this.state.value.getHours() + 'h ' + this.state.value.getMinutes()+'m'}
+      {this.state.hours + 'h ' + this.state.minutes+'m'}
       <Icon name="edit" size={30} color={Palette.orange.shade_500} />
       </Text>
 
@@ -34,15 +34,16 @@ export class TimePicker extends Component
   {
     try {
       const {action, hour, minute} = await TimePickerAndroid.open({
-        hour: this.state.value.getHours(),
-        minute: this.state.value.getMinutes(),
+        hour: this.state.hours,
+        minute: this.state.minutes,
         is24Hour: true,
       });
       if (action !== TimePickerAndroid.dismissedAction) {
-        newVal = new Date(0)
-        newVal.setHours(hour, minute, 0,0)
+        newVal = 1000*60 * (hour*60 + minute)
         this.setState({
-          value: newVal
+          value: newVal,
+          hours: Math.floor(newVal/(1000*60*60)),
+          minutes: Math.floor(newVal/(1000*60) % 60)
         })
         this.props.onChange(newVal)
       }

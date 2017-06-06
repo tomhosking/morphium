@@ -37,7 +37,7 @@ import morphiumReducer from './reducers'
 
 import {persistStore, autoRehydrate} from 'redux-persist'
 
-const initState = {triggerTime: new Date(0), interval: new Date(1000*60*60*4), title: 'Example Drug'}
+const initState = {triggerTime: new Date(0), interval: 1000*60*60*4, title: 'Example Drug'}
 
 const store = compose(autoRehydrate())(createStore)(morphiumReducer, initState)
 

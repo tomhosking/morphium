@@ -13,7 +13,7 @@ const morphiumReducer = (state, action) => {
       console.log('Store: SET_INTERVAL action')
       newState = {
         ...state,
-        interval: (new Date(action.interval)).toUTCString(),
+        interval: action.interval,
       }
       return(newState);
     case 'SET_TITLE':

@@ -40,7 +40,7 @@ export default class MainView extends Component {
 
 
   render() {
-    console.log(styles)
+    // console.log(styles)
     return (
       <View style={styles.container}>
         <Text style={styles.welcome}>

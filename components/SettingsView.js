@@ -12,10 +12,10 @@ import ConnectedItemEditor from './ItemEditor'
 var styles = require('../styles.js').styles
 
 const mapStateToProps = (state) => {
-  console.log('got state: ' + state.triggerTime)
+  // console.log('got state: ' + state.triggerTime)
   return {
     lastEvent: new Date(state.triggerTime),
-    interval: new Date(state.interval),
+    interval: state.interval,
     title: state.title
   }
 }

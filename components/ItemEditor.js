@@ -43,10 +43,10 @@ export class MorphiumItemEditor extends Component {
 
 
 const mapStateToProps = (state) => {
-  console.log('got state: ' + state.triggerTime)
+  // console.log('got state: ' + state.triggerTime)
   return {
     lastEvent: new Date(state.triggerTime),
-    interval: new Date(state.interval),
+    interval: (state.interval),
     title: state.title
   }
 }
@@ -54,11 +54,11 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     onChangeTitle: (t) => {
-      console.log('title changed')
+      // console.log('title changed')
       dispatch({type: 'SET_TITLE', id: 0, title: t})
     },
     onChangeInterval: (i) => {
-      console.log('interval changed')
+      // console.log('interval changed')
       dispatch({type: 'SET_INTERVAL', id: 0, interval: i})
     }
   }
