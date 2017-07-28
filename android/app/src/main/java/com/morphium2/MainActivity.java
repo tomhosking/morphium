@@ -1,4 +1,4 @@
-package com.morphium;
+package com.morphium2;
 
 import com.facebook.react.ReactActivity;
 
@@ -10,6 +10,6 @@ public class MainActivity extends ReactActivity {
      */
     @Override
     protected String getMainComponentName() {
-        return "morphium";
+        return "morphium2";
     }
 }

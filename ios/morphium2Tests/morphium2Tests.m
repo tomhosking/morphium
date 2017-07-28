@@ -16,11 +16,11 @@
 #define TIMEOUT_SECONDS 600
 #define TEXT_TO_LOOK_FOR @"Welcome to React Native!"
 
-@interface morphiumTests : XCTestCase
+@interface morphium2Tests : XCTestCase
 
 @end
 
-@implementation morphiumTests
+@implementation morphium2Tests
 
 - (BOOL)findSubviewInView:(UIView *)view matching:(BOOL(^)(UIView *view))test
 {

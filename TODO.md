@@ -15,3 +15,4 @@
 * iOS
 * Complex rules
 * Pain score tracker
+* "Rewards" for reducing frequency?

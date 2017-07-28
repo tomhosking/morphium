@@ -89,4 +89,4 @@ export default class MorphiumApp extends Component {
   }
 }
 
-AppRegistry.registerComponent('morphium', () => MorphiumApp);
+AppRegistry.registerComponent('morphium2', () => MorphiumApp);

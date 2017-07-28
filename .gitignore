@@ -40,6 +40,8 @@ yarn-error.log
 buck-out/
 \.buckd/
 *.keystore
+*.jks
+
 
 # fastlane
 #
@@ -54,3 +56,5 @@ fastlane/screenshots
 
 banner.psd
 banner.png
+
+*.jar
