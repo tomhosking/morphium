@@ -9,6 +9,6 @@ Set the name of your medication, and the minimum interval that you have been adv
 
 This app does not give medical advice! Always follow the instructions that were given to you by your doctor.
 
-[Available on Google Play Store](https://play.google.com/store/apps/details?id=com.morphium)
+[Available on Google Play Store](https://play.google.com/store/apps/details?id=com.morphium2)
 
 [View ToDo list](./TODO.md)
